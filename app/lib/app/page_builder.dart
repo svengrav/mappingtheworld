@@ -34,5 +34,5 @@ class PageBuilder {
       pages.where((page) => page.landingPage).length == 1;
 
   PageData getLandingPage() => pages.firstWhere((page) => page.landingPage);
-  bool pageIdsAreUnique() => pages.isUniqueValue((page) => page.id);
+  bool pageIdsAreUnique() => pages.isUnique((page) => page.id);
 }

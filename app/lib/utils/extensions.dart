@@ -26,7 +26,7 @@ extension Screen on BuildContext {
 }
 
 extension IterableExtension<T> on Iterable<T> {
-  bool isUniqueValue(Object Function(T e) getValue) {
+  bool isUnique(Object Function(T e) getValue) {
     bool isUnique = true;
     forEach((element) {
       if (where((otherElement) => getValue(otherElement) == getValue(element)).length > 1) {
@@ -35,4 +35,7 @@ extension IterableExtension<T> on Iterable<T> {
     });
     return isUnique;
   }
+  
+  bool isSingle(Object Function(T e) getValue, Object value) 
+    => where((element) => getValue(element) == value).length == 1;
 }
