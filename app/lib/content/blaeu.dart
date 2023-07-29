@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mtw_app/map/map_definition.dart';
-
-import '../map/map_background.dart';
-import '../map/map_layer.dart';
-import '../map/map_layer_point.dart';
-import '../map/map_resource.dart';
-import '../map/map_page.dart';
 
 class MapBlaeu extends StatelessWidget {
   const MapBlaeu({super.key});
 
   @override
-  Widget build(BuildContext context) => SizedBox();
+  Widget build(BuildContext context) => const SizedBox();
   
   // MapPage(
   //       definition: MapDefinition(

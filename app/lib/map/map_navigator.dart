@@ -147,9 +147,6 @@ class MapNavigator with Notifier {
 
   double _calcMaxScale() => _shrinkRatio() < 1.0 ? 1 / _shrinkRatio() : 1;
 
-  String _toPercentageString(double value) =>
-      '${value.toStringAsFixed(2)} (${(value * 100).toStringAsFixed(2)}%)';
-
   void _calcMapSize() {
     _mapCurrentHeight = _calcMapHeight();
     _mapCurrentWidth = _calcMapWidth();

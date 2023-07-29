@@ -13,33 +13,21 @@ class MapLayerStack extends StatefulWidget {
   State<MapLayerStack> createState() => _MapLayerStackState();
 }
 
-class _MapLayerStackState extends State<MapLayerStack>
-with SingleTickerProviderStateMixin {
-  double opacityLevel = 1.0;
-  bool visiblity = true;
+class _MapLayerStackState extends State<MapLayerStack> {
+  double _opacityLevel = 1.0;
+  bool _visiblity = true;
 
   late final ValueListener _stackListener = ValueListener((sender, args) {
     if (widget.layer.controller.visible) {
       setState(() {
-        opacityLevel = 1;
+        _opacityLevel = 1;
       });
     } else {
       setState(() {
-        opacityLevel = 0;
+        _opacityLevel = 0;
       });
     }
   });
-
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 1),
-    value: 1.0,
-    vsync: this,
-  );
-
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeIn,
-  );
 
   @override
   void initState() {
@@ -63,14 +51,14 @@ with SingleTickerProviderStateMixin {
     return AnimatedOpacity (
       onEnd: () {
         setState(() {
-          visiblity = widget.layer.controller.visible;
+          _visiblity = widget.layer.controller.visible;
         });
       },
-      duration:  const Duration(milliseconds: 500),
-      opacity: opacityLevel,
-      child: visiblity ? Stack(
+      duration: const Duration(milliseconds: 500),
+      opacity: _opacityLevel,
+      child: _visiblity ? Stack(
         children: children,
-      ) : SizedBox(),
+      ) : const SizedBox(),
     );
   }
 }

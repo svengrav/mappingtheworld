@@ -1,7 +1,3 @@
-// ignore: depend_on_referenced_packages
-import 'dart:math';
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/map_definition.dart';
 import 'package:mtw_app/map/map_position.dart';
@@ -9,16 +5,11 @@ import 'package:mtw_app/map/map_settings.dart';
 import 'package:mtw_app/utils/extensions.dart';
 
 import '../app/app_scaffold.dart';
-import 'map_background.dart';
+import 'map_description.dart';
 import 'map_image.dart';
-import 'map_layer.dart';
-import 'map_layer_point.dart';
-import 'map_layer_stack.dart';
-import 'map_navigator.dart';
 import 'map_layer_slider.dart';
 import 'map_navigator_card.dart';
 import 'map_navigator_settings.dart';
-import 'map_description.dart';
 
 class MapPage extends StatelessWidget {
 

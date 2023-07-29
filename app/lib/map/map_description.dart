@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mtw_app/layout/layout_breakpoints.dart';
 import 'package:mtw_app/map/map_definition.dart';
 
 import 'map_position.dart';

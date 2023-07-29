@@ -44,7 +44,7 @@ class AppTheme {
           color: Colors.white24,
         ),
 
-        sliderTheme: SliderThemeData(
+        sliderTheme: const SliderThemeData(
           inactiveTrackColor: Colors.white24,
           thumbColor: Colors.white
         ),
