@@ -13,17 +13,18 @@ class MapColumbus extends StatelessWidget {
   Widget build(BuildContext context) => MapPage(
         MapDefinition(
           title: "Voyages of Columbus",
-          summary: "The four voyages of Christopher Columbus between 1492 and 1504.",
+          summary:
+              "The four voyages of Christopher Columbus between 1492 and 1504.",
           year: "1492 - 1504",
           width: 1000,
           height: 1350,
           background: const MapBackground(),
-          defaultLayer: 2,
+          defaultLayer: 4,
           layers: [
             MapLayerDefinition(
                 key: 1,
                 label: "Voyages",
-                resource: MapImageRessource(path: 'assets/maplines.png')),
+                resource: MapImageRessource(path: 'assets/maplines.png', background: Colors.black54,)),
             MapLayerDefinition(
                 key: 2,
                 label: "Map",
@@ -39,9 +40,17 @@ class MapColumbus extends StatelessWidget {
           ],
           points: [
             MapPointDefinition(
-                key: 1, layerKeys: [MapLayerDefinitionKey(4),MapLayerDefinitionKey(3)], position: const Offset(0.5, 0.5), label: "Point", description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."),
+                key: 1,
+                layerKeys: [MapLayerDefinitionKey(2)],
+                position: const Offset(0.5, 0.5),
+                label: "Point 1",
+                description:
+                    "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."),
             MapPointDefinition(
-                key: 2, position: const Offset(100, 0.5), label: "Point"),
+                key: 2, 
+                layerKeys: [MapLayerDefinitionKey(3),MapLayerDefinitionKey(2)],
+                position: const Offset(0.1, 0.5), 
+                label: "Point 2"),
           ],
         ),
       );

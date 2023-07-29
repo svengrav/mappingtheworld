@@ -22,7 +22,7 @@ class MapImageDefinition {
   final MapVisibilityController controller = MapVisibilityController();
 
   MapStackLayerDefinition get defaultStack => _getDefaultLayer(defaultLayerKey);
-  List<MapStackLayerDefinition> get stacks => _stacks;
+  List<MapStackLayerDefinition> get stacks => _stacks.reversed.toList();
 
   MapImageDefinition({
     required this.navigator,
@@ -51,7 +51,7 @@ class MapImageDefinition {
       stacks.add(MapStackLayerDefinition(
         layer: layer,
         points: mapPoints
-            .where((element) => element.layerKeys.contains(layer.key))
+            .where((point) => point.layerKeys.contains(layer.key))
             .toList(),
       ));
     }

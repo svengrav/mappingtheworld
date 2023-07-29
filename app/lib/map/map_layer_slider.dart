@@ -27,6 +27,12 @@ class _MapLayerSliderState extends State<MapLayerSlider> {
   late List<MapStackLayerDefinition> _stack;
 
   @override
+  void initState() {
+    super.initState();
+    _currentValue = widget.stack.stacks.reversed.toList().indexOf(widget.stack.defaultStack).toDouble();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _stack = widget.stack.stacks;
 

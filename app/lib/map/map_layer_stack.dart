@@ -15,15 +15,17 @@ class MapLayerStack extends StatefulWidget {
 
 class _MapLayerStackState extends State<MapLayerStack>
 with SingleTickerProviderStateMixin {
+  double opacityLevel = 1.0;
+  bool visiblity = true;
 
   late final ValueListener _stackListener = ValueListener((sender, args) {
     if (widget.layer.controller.visible) {
       setState(() {
-        _controller.animateTo(1.0);
+        opacityLevel = 1;
       });
     } else {
       setState(() {
-        _controller.animateTo(0.0);
+        opacityLevel = 0;
       });
     }
   });
@@ -58,11 +60,17 @@ with SingleTickerProviderStateMixin {
       children.add(MapPoint(pointDefinition: point));
     }
 
-    return FadeTransition(
-      opacity: _animation,
-      child: Stack(
+    return AnimatedOpacity (
+      onEnd: () {
+        setState(() {
+          visiblity = widget.layer.controller.visible;
+        });
+      },
+      duration:  const Duration(milliseconds: 500),
+      opacity: opacityLevel,
+      child: visiblity ? Stack(
         children: children,
-      ),
+      ) : SizedBox(),
     );
   }
 }
