@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../utils/notifier.dart';
 
-class MapPositionController with Notifier {
-  MapPositionController({visible = true}) : _isVisible = visible;
+class MapVisibilityController with Notifier  {
+  MapVisibilityController({visible = true}) : _isVisible = visible;
 
   bool _isVisible = false;
 
@@ -18,6 +18,11 @@ class MapPositionController with Notifier {
     _isVisible = false;
     notify(this); 
   }
+}
+
+
+class MapPositionController extends MapVisibilityController {
+  MapPositionController({visible = true}) : super(visible: visible);
 }
 
 class MapPosition {

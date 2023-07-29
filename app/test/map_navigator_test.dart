@@ -225,8 +225,8 @@ void main() {
 
     expect(isNotified, false);
     mapNavigator.set(
-      screenHeight: 200,
-      screenWidth: 200,
+      pageHeight: 200,
+      pageWidth: 200,
     );
 
     expect(isNotified, true);
@@ -243,8 +243,8 @@ void main() {
 
     // set height and width to same value
     mapNavigator.set(
-      screenHeight: 100,
-      screenWidth: 100,
+      pageHeight: 100,
+      pageWidth: 100,
     );
 
     expect(isNotified, false);

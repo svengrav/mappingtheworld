@@ -65,8 +65,6 @@ class _MapSettingsSwitchState extends State<MapSettingsSwitch> {
   }
 }
 
-
-
 class MapSettings extends StatefulWidget {
   MapSettings({
     key,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/map_point_definition.dart';
 
 import 'map_position.dart';
-import 'map_layer_stack.dart';
 import 'map_navigator.dart';
 import 'map_screen_viewer.dart';
 
@@ -10,13 +10,13 @@ class MapImage extends StatelessWidget {
     super.key,
     required this.controller,
     required this.navigator,
-    required this.layer,
+    required this.stack,
     required this.position,
   });
 
   final TransformationController controller;
   final MapNavigator navigator;
-  final List<MapLayerStack> layer;
+  final MapImageDefinition stack;
   final MapPosition position;
 
   @override
@@ -27,7 +27,7 @@ class MapImage extends StatelessWidget {
         width: position.width,
         transformationController: controller,
         navigator: navigator,
-        layer: layer,
+        stack: stack,
       ),
     );
   }

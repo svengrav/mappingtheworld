@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/map_point_definition.dart';
 import 'package:mtw_app/utils/extensions.dart';
 import 'map_layer_stack.dart';
 import 'map_navigator.dart';
@@ -6,7 +7,7 @@ import 'map_navigator.dart';
 class MapViewer extends StatelessWidget {
   final TransformationController transformationController;
   final MapNavigator navigator;
-  final List<MapLayerStack> layer;
+  final MapImageDefinition stack;
   final double height;
   final double width;
 
@@ -14,13 +15,18 @@ class MapViewer extends StatelessWidget {
     super.key,
     required this.transformationController,
     required this.navigator,
-    required this.layer,
+    required this.stack,
     required this.height,
     required this.width,
   });
 
   @override
   Widget build(BuildContext context) {
+    var children = <Widget>[];
+    for(var layer in stack.stacks) {
+      children.add(MapLayerStack(layer: layer));
+    }
+
     return InteractiveViewer(
         constrained: true,
         transformationController: transformationController,
@@ -30,9 +36,7 @@ class MapViewer extends StatelessWidget {
         boundaryMargin: const EdgeInsets.all(0.0),
         minScale: 1,
         maxScale: navigator.mapMaxScale,
-        child: Stack(
-          children: layer,
-        ),
+        child: Stack(children: children,), 
       );
   }
 

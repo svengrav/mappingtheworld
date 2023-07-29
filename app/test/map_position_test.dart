@@ -1,6 +1,4 @@
 // Import the test package and Counter class
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/map_position.dart';
 import 'package:test/test.dart';

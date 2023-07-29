@@ -75,8 +75,8 @@ class MapNavigator with Notifier {
     double? mapScale,
     double? mapHorizontalOffset,
     double? mapVerticalOffset,
-    double? screenHeight,
-    double? screenWidth,
+    double? pageHeight,
+    double? pageWidth,
     double? cursorVertical,
     double? cursorHorizontal,
     double? shrinkWidth,
@@ -94,8 +94,8 @@ class MapNavigator with Notifier {
     _mapVerticalOffset = _mapVerticalOffset._change(mapVerticalOffset, valueChanged);
     _mapHorizontalOffset = _mapHorizontalOffset._change(mapHorizontalOffset, valueChanged);
 
-    _pageWidth = _pageWidth._change(screenWidth, valueChanged);
-    _pageHeight = _pageHeight._change(screenHeight, valueChanged);
+    _pageWidth = _pageWidth._change(pageWidth, valueChanged);
+    _pageHeight = _pageHeight._change(pageHeight, valueChanged);
 
     _alignment = alignment ?? _alignment;
   
@@ -146,9 +146,6 @@ class MapNavigator with Notifier {
   int calcPixelYPosition(double y) => (mapCurrentHeight * y).ceil();
 
   double _calcMaxScale() => _shrinkRatio() < 1.0 ? 1 / _shrinkRatio() : 1;
-
-  String _toPercentageString(double value) =>
-      '${value.toStringAsFixed(2)} (${(value * 100).toStringAsFixed(2)}%)';
 
   void _calcMapSize() {
     _mapCurrentHeight = _calcMapHeight();

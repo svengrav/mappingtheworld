@@ -27,7 +27,16 @@ class _MapNavigatorCard extends State<MapNavigatorCard> {
   late MapPositionController _controller;
   late MapNavigator _navigator;
 
-  Map<String, String> _mapNavigatorSet = {};
+  late final ValueListener _positionListener = ValueListener((sender, args) {
+    setState(() {});
+  });
+
+  late final ValueListener _navigatorListener = ValueListener((sender, args) {
+    setState(() => _mapNavigatorSet = _navigator.toDictionary());
+  });
+
+  late Map<String, String> _mapNavigatorSet = {};
+
 
   @override
   void initState() {
@@ -35,12 +44,17 @@ class _MapNavigatorCard extends State<MapNavigatorCard> {
     _controller = widget.position.controller;
     _navigator = widget.navigator;
 
-    _controller.addListener(
-        ValueListener((sender, args) => { setState(() {}) }));
-    _navigator.addListener(
-        ValueListener((sender, args) => { setState(() {}) }));
+    _controller.addListener(_positionListener);
+    _navigator.addListener(_navigatorListener);
 
     _mapNavigatorSet = _navigator.toDictionary();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_positionListener);
+    _navigator.removeListener(_navigatorListener);
+    super.dispose();
   }
 
   List<TableRow> buildNavigatorTable() {
