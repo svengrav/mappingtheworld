@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/map_navigator.dart';
 import 'package:mtw_app/map/map_point_definition.dart';
 import 'package:mtw_app/map/map_resource.dart';
 import 'package:test/test.dart';
@@ -6,7 +7,8 @@ import 'package:test/test.dart';
 // ignore: avoid_relative_lib_imports
 void main() {
   test('Stack definition returns valid default stack', () {
-    var stackDefinition = MapStackDefinition(
+    var stackDefinition = MapImageDefinition(
+      navigator: MapNavigator(mapWidth: 100, mapHeight: 100),
       defaultLayerKey: "key2",
       mapPoints: [
         MapPointDefinition(
@@ -37,7 +39,9 @@ void main() {
 
   test('Stack definition returns valid default stack 2', () {
     expect(
-        () => MapStackDefinition(defaultLayerKey: "key1", mapLayers: [
+        () => MapImageDefinition(
+          navigator: MapNavigator(mapWidth: 100, mapHeight: 100),
+          defaultLayerKey: "key1", mapLayers: [
               MapLayerDefinition(
                   key: "key1", label: "label1", resource: MapResource.empty),
               MapLayerDefinition(
@@ -47,6 +51,6 @@ void main() {
             ]),
         throwsA(predicate((error) =>
             error is AssertionError &&
-            error.message == MapStackDefinition.layerKeyNotUnique)));
+            error.message == MapImageDefinition.layerKeyNotUnique)));
   });
 }

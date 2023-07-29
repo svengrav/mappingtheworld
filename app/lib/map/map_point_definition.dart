@@ -1,37 +1,32 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/map_definition.dart';
+import 'package:mtw_app/map/map_navigator.dart';
+import 'package:mtw_app/map/map_position.dart';
 import 'package:mtw_app/utils/extensions.dart';
+import 'package:mtw_app/utils/notifier.dart';
 
 import 'map_resource.dart';
 
-class MapStackLayerDefinition {
-  final MapLayerDefinition layer;
-  final List<MapPointDefinition> points;
-
-  MapLayerDefinitionKey get key => layer.key;
-
-  MapStackLayerDefinition({
-    required this.layer,
-    this.points = const [],
-  });
-}
-
-class MapStackDefinition {
+class MapImageDefinition {
   static const String layerKeyNotUnique = "Layers with the same key are invalid";
   static const String pointKeyNotUnique = "Points with the same key are invalid";
 
   final List<MapStackLayerDefinition> _stacks = [];
+  final MapNavigator navigator;
 
   final List<MapPointDefinition> mapPoints;
   final List<MapLayerDefinition> mapLayers;
   final MapLayerDefinitionKey defaultLayerKey;
 
+  final MapVisibilityController controller = MapVisibilityController();
+
   MapStackLayerDefinition get defaultStack => _getDefaultLayer(defaultLayerKey);
   List<MapStackLayerDefinition> get stacks => _stacks;
 
-  MapStackDefinition({
-    required String defaultLayerKey,
+  MapImageDefinition({
+    required this.navigator,
+    required Object defaultLayerKey,
     this.mapPoints = const [],
     this.mapLayers = const [],
   }) : defaultLayerKey = MapLayerDefinitionKey(defaultLayerKey) {
@@ -40,14 +35,14 @@ class MapStackDefinition {
     assert(mapLayers.isUnique((layer) => layer.key), layerKeyNotUnique);
     assert(mapPoints.isUnique((point) => point.key), pointKeyNotUnique);
 
-    _stacks.addAll(_createStacks(mapLayers, mapPoints));
+    _stacks.addAll(_buildStacks(mapLayers, mapPoints));
   }
 
   MapStackLayerDefinition _getDefaultLayer(MapLayerDefinitionKey key) {
     return _stacks.firstWhere((stack) => stack.key == key);
   }
 
-  List<MapStackLayerDefinition> _createStacks(
+  List<MapStackLayerDefinition> _buildStacks(
     List<MapLayerDefinition> mapLayers,
     List<MapPointDefinition> mapPoints,
   ) {
@@ -69,6 +64,19 @@ class MapPointDefinitionKey extends MapDefintionKey {
   MapPointDefinitionKey(super.value);
 }
 
+class MapStackLayerDefinition {
+  final MapLayerDefinition layer;
+  final List<MapPointDefinition> points;
+  final MapVisibilityController controller = MapVisibilityController();
+
+  MapLayerDefinitionKey get key => layer.key;
+
+  MapStackLayerDefinition({
+    required this.layer,
+    this.points = const [],
+  });
+}
+
 class MapPointDefinition {
   final List<MapLayerDefinitionKey> layerKeys;
   final MapPointDefinitionKey key;
@@ -78,7 +86,7 @@ class MapPointDefinition {
   final String? description;
 
   MapPointDefinition({
-    required String key,
+    required Object key,
     required this.position,
     required this.label,
     this.layerKeys = const [],
@@ -103,7 +111,7 @@ class MapLayerDefinition {
   final String? description;
 
   MapLayerDefinition({
-    required String key,
+    required Object key,
     required this.label,
     required this.resource,
     this.position = const Offset(0, 0),
@@ -114,7 +122,7 @@ class MapLayerDefinition {
 }
 
 class MapDefintionKey {
-  final String value;
+  final Object value;
 
   MapDefintionKey(this.value);
 
