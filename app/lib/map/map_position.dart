@@ -35,6 +35,7 @@ class MapPosition {
   double _pageWidth;
   double _pageHeight;
 
+  bool get visible => controller.visible;
   double get top => _rectangle.top;
   double get right => _pageWidth - _rectangle.right;
   double get bottom => _pageHeight - _rectangle.bottom;
@@ -96,7 +97,10 @@ class MapPosition {
     _alignChild = alignChild ?? _alignChild;
 
     var canvas = Rect.fromLTRB(0, 0, pageWidth ?? _pageWidth, pageHeight ?? _pageHeight);
-    var content = Size(width ?? _rectangle.width, height ?? _rectangle.height);
+
+    var maxWidth = _pageWidth < (width ?? _rectangle.width) ? _pageWidth : width ?? _rectangle.width;
+    var maxHeight = _pageHeight < (height ?? _rectangle.height) ? _pageHeight : height ?? _rectangle.height;
+    var content = Size(maxWidth, maxHeight);
 
     _rectangle = canvas.align(alignment, content);
 
@@ -118,21 +122,24 @@ class MapPosition {
   bool isRightAlignment(double? left, double? right, Alignment? alignment) =>
       left == null && right != null && alignment == null;
 
+}
+
+extension MapPositionBuilder on MapPosition {
   Widget build(Widget child) {
-    return controller.visible ? Positioned(
-      height: height,
-      width: width,
-      top: top,
-      left: left,
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: height, maxWidth: width),
-        child: Align(
-          alignment: _alignChild,
-          child: child,
+      return visible ? Positioned(
+        height: height,
+        width: width,
+        top: top,
+        left: left,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: height, maxWidth: width),
+          child: Align(
+            alignment: _alignChild,
+            child: child, 
+          ),
         ),
-      ),
-    ) : const Positioned(height: 0, width: 0, child: SizedBox(),);
-  }
+      ) : const Positioned(height: 0, width: 0, child: SizedBox(),);
+    }
 }
 
 extension on double? {

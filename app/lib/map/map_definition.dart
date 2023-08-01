@@ -1,8 +1,9 @@
 import 'package:mtw_app/map/map_background.dart';
 import 'package:mtw_app/map/map_navigator.dart';
+import 'package:mtw_app/map/map_page_content.dart';
 import 'package:mtw_app/map/map_point_definition.dart';
 
-class MapDefinition {
+class MapDefinition implements Disposable {
   final double width;
   final double height;
   final String title;
@@ -29,4 +30,9 @@ class MapDefinition {
           mapPoints: points,
           navigator: MapNavigator(mapWidth: width, mapHeight: height),
         );
+        
+          @override
+          void dispose() {
+            // TODO: implement dispose
+          }
 }

@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/map_navigator.dart';
 import 'package:mtw_app/map/map_position.dart';
 import 'package:mtw_app/utils/extensions.dart';
+import 'package:equatable/equatable.dart';
+
 
 import 'map_resource.dart';
 
@@ -39,19 +42,31 @@ class MapImageDefinition {
     return _stacks.firstWhere((stack) => stack.key == key);
   }
 
+  int _getDefaultLayerIndex() {
+    var defaultLayerIndex = -1;
+    mapLayers.asMap().forEach((index, layer) {
+        if(layer.key == defaultLayerKey) {
+          defaultLayerIndex = index;
+        }
+    });
+    return defaultLayerIndex;
+  }
+
   List<MapStackLayerDefinition> _buildStacks(
     List<MapLayerDefinition> mapLayers,
     List<MapPointDefinition> mapPoints,
-  ) {
+  ) {    
     List<MapStackLayerDefinition> stacks = [];
-    for (var layer in mapLayers) {
+    mapLayers.asMap().forEach((index, layer) { 
       stacks.add(MapStackLayerDefinition(
+        visible: index >= _getDefaultLayerIndex(),
+        index: index,
         layer: layer,
         points: mapPoints
             .where((point) => point.layerKeys.contains(layer.key))
             .toList(),
       ));
-    }
+    });
     return stacks;
   }
 }
@@ -61,7 +76,9 @@ class MapPointDefinitionKey extends MapDefintionKey {
   MapPointDefinitionKey(super.value);
 }
 
-class MapStackLayerDefinition {
+class MapStackLayerDefinition extends Equatable {
+  final bool visible;
+  final int index;
   final MapLayerDefinition layer;
   final List<MapPointDefinition> points;
   final MapVisibilityController controller = MapVisibilityController();
@@ -69,15 +86,21 @@ class MapStackLayerDefinition {
   MapLayerDefinitionKey get key => layer.key;
 
   MapStackLayerDefinition({
+    required this.visible,
     required this.layer,
+    required this.index,
     this.points = const [],
   });
+  
+  @override
+  List<Object?> get props => [visible, index, layer, points];
 }
 
 class MapPointDefinition {
   final List<MapLayerDefinitionKey> layerKeys;
   final MapPointDefinitionKey key;
   final Offset position;
+  final bool visible;
   final String label;
   final String? summary;
   final String? description;
@@ -86,6 +109,7 @@ class MapPointDefinition {
     required Object key,
     required this.position,
     required this.label,
+    this.visible = true,
     this.layerKeys = const [],
     this.summary,
     this.description,

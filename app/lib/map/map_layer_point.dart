@@ -95,7 +95,7 @@ class MapPointContent extends StatelessWidget {
 class MapPointTarget extends StatefulWidget {
   const MapPointTarget({super.key, required this.onTap});
   final void Function() onTap;
-  final double circle = 20;
+  final double circle = 15;
 
   @override
   State<MapPointTarget> createState() => _MapPointTargetState();

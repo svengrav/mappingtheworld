@@ -6,7 +6,6 @@ import 'map_navigator.dart';
 import 'map_position.dart';
 
 class MapNavigatorCard extends StatefulWidget {
-  static const double width = 300;
 
   MapNavigatorCard({
     key,
@@ -71,7 +70,7 @@ class _MapNavigatorCard extends State<MapNavigatorCard> {
   @override
   Widget build(BuildContext context) {
     var content = Table(columnWidths: const {
-        0: FlexColumnWidth(1.2),
+        0: FlexColumnWidth(1),
         1: FlexColumnWidth(1)
       },
       children: buildNavigatorTable(),

@@ -61,7 +61,7 @@ class MapPage extends StatelessWidget {
       pageHeight: pageHeight,
       visible: false,
       height: 300,
-      width: 300,
+      width: 400,
       alignment: Alignment.topCenter,
     );
 

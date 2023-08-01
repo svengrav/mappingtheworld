@@ -17,12 +17,6 @@ class AppTheme {
   static double multiplier(int multi)
     => (dax * multi).toDouble();
 
-  static Color onPrimaryText(bool? primary) =>
-      primary != null && primary ? onPrimaryColor : textColor;
-
-  static Color onPrimary(bool? primary) =>
-      primary != null && primary ? onPrimaryColor : textColor;
-
   static ThemeData dark(BuildContext context) => ThemeData(
         // Basic theming
         useMaterial3: true,
@@ -30,7 +24,7 @@ class AppTheme {
         // AppBar theming
         appBarTheme: const AppBarTheme(
             // titleSpacing: 100,
-            titleTextStyle: TextStyle(fontSize: 22),
+            titleTextStyle: TextStyle(fontSize: 22, color: textColor),
             backgroundColor: backgroundColor,
             foregroundColor: textColor,
             centerTitle: true,
@@ -66,7 +60,6 @@ class AppTheme {
 
         )),
 
-
         checkboxTheme: const CheckboxThemeData(
           checkColor: MaterialStatePropertyAll(Colors.black),
           visualDensity: VisualDensity.compact
@@ -83,7 +76,6 @@ class AppTheme {
         extensions: <ThemeExtension<MapCardTheme>>[
           MapCardTheme(borderRadius: multiplier(1))
         ]
-        
 
       );
 }

@@ -20,12 +20,12 @@ class MapDescription extends StatelessWidget {
       Container(
         color: Colors.white38,
         height: 1,
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.all(15),
         width: 50,
       ),
       Text(
-        textAlign: TextAlign.center,
         definition.summary,
+        textAlign: TextAlign.center,
         style: GoogleFonts.robotoSlab(fontSize: 15),
       )
     ],);

@@ -19,7 +19,7 @@ class MapColumbus extends StatelessWidget {
           width: 1000,
           height: 1350,
           background: const MapBackground(),
-          defaultLayer: 4,
+          defaultLayer: 2,
           layers: [
             MapLayerDefinition(
                 key: 1,
@@ -32,11 +32,7 @@ class MapColumbus extends StatelessWidget {
             MapLayerDefinition(
                 key: 3,
                 label: "Schema",
-                resource: MapImageRessource(path: 'assets/maplines.png')),
-            MapLayerDefinition(
-                key: 4,
-                label: "Background",
-                resource: MapColorResource(color: Colors.black12)),
+                resource: MapImageRessource(path: 'assets/maplines.png', background: Colors.black26,)),
           ],
           points: [
             MapPointDefinition(
