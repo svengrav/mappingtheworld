@@ -19,7 +19,7 @@ class MapColumbus extends StatelessWidget {
           width: 1000,
           height: 1350,
           background: const MapBackground(),
-          defaultLayer: 2,
+          defaultLayerKey: 2,
           layers: [
             MapLayerDefinition(
                 key: 1,

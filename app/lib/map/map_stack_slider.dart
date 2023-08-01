@@ -6,35 +6,36 @@ import 'map_position.dart';
 
 typedef OnLayerChanged = void Function(int layer);
 
-class MapLayerSlider extends StatefulWidget {
-  const MapLayerSlider({
+class MapStackSlider extends StatefulWidget {
+  const MapStackSlider({
     super.key,
-    required this.stack,
+    required this.image,
     this.onLayerChanged,
     required this.position,
   });
 
   final OnLayerChanged? onLayerChanged;
-  final MapImageDefinition stack;
+  final MapImageDefinition image;
   final MapPosition position;
 
   @override
-  State<MapLayerSlider> createState() => _MapLayerSliderState();
+  State<MapStackSlider> createState() => _MapStackSliderState();
 }
 
-class _MapLayerSliderState extends State<MapLayerSlider> {
+class _MapStackSliderState extends State<MapStackSlider> {
   late double _currentValue = 1.0;
-  late List<MapStackLayerDefinition> _stack;
+  late List<MapStackLayerDefinition> _stacks;
 
   @override
   void initState() {
     super.initState();
-    _currentValue = widget.stack.stacks.reversed.toList().indexOf(widget.stack.defaultStack).toDouble();
+    _stacks = widget.image.stacks;
+    _currentValue = widget.image.currentStackIndex.toDouble();
   }
 
   @override
   Widget build(BuildContext context) {
-    _stack = widget.stack.stacks;
+    _stacks = widget.image.stacks;
 
     return widget.position.build(
       Transform.scale(
@@ -42,11 +43,11 @@ class _MapLayerSliderState extends State<MapLayerSlider> {
         child: Slider(
           value: _currentValue,
           min: 0,
-          max: widget.stack.mapLayers.length - 1,
-          divisions: widget.stack.mapLayers.length - 1,
+          max: _stacks.length - 1,
+          divisions: _stacks.length - 1,
           onChanged: (double value) {
             setState(() {
-              _stack.forEachIndexed((i, stack) {
+              _stacks.forEachIndexed((i, stack) {
                 if (i <= value) {
                   stack.controller.show();
                 } else {
@@ -54,7 +55,7 @@ class _MapLayerSliderState extends State<MapLayerSlider> {
                 }
               });
               _currentValue = value;
-              widget.stack.controller.notify(this);
+              widget.image.controller.notify(this);
             });
             widget.onLayerChanged?.call(value.toInt());
           },

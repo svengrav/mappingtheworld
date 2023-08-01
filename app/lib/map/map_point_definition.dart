@@ -1,3 +1,4 @@
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/map_navigator.dart';
@@ -21,8 +22,11 @@ class MapImageDefinition {
 
   final MapVisibilityController controller = MapVisibilityController();
 
+  int _currentStackIndex = -1;
+  int get currentStackIndex => _currentStackIndex;
+
   MapStackLayerDefinition get defaultStack => _getDefaultLayer(defaultLayerKey);
-  List<MapStackLayerDefinition> get stacks => _stacks.reversed.toList();
+  List<MapStackLayerDefinition> get stacks => _stacks;
 
   MapImageDefinition({
     required this.navigator,
@@ -35,6 +39,7 @@ class MapImageDefinition {
     assert(mapLayers.isUnique((layer) => layer.key), layerKeyNotUnique);
     assert(mapPoints.isUnique((point) => point.key), pointKeyNotUnique);
 
+    _currentStackIndex = _getStackIndex();
     _stacks.addAll(_buildStacks(mapLayers, mapPoints));
   }
 
@@ -42,14 +47,17 @@ class MapImageDefinition {
     return _stacks.firstWhere((stack) => stack.key == key);
   }
 
-  int _getDefaultLayerIndex() {
-    var defaultLayerIndex = -1;
-    mapLayers.asMap().forEach((index, layer) {
+  int _getStackIndex() {
+    var stackIndex = _currentStackIndex;
+    if(stackIndex < 0) {
+        mapLayers.asMap().forEach((index, layer) {
         if(layer.key == defaultLayerKey) {
-          defaultLayerIndex = index;
+          stackIndex = index;
         }
-    });
-    return defaultLayerIndex;
+      });
+    }
+
+    return stackIndex;
   }
 
   List<MapStackLayerDefinition> _buildStacks(
@@ -59,7 +67,7 @@ class MapImageDefinition {
     List<MapStackLayerDefinition> stacks = [];
     mapLayers.asMap().forEach((index, layer) { 
       stacks.add(MapStackLayerDefinition(
-        visible: index >= _getDefaultLayerIndex(),
+        visible: index >= _getStackIndex(),
         index: index,
         layer: layer,
         points: mapPoints

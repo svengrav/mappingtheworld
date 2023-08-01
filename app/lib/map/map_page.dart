@@ -7,7 +7,7 @@ import 'package:mtw_app/utils/extensions.dart';
 import '../app/app_scaffold.dart';
 import 'map_description.dart';
 import 'map_image.dart';
-import 'map_layer_slider.dart';
+import 'map_stack_slider.dart';
 import 'map_navigator_card.dart';
 import 'map_navigator_settings.dart';
 
@@ -100,9 +100,9 @@ class MapPage extends StatelessWidget {
               definition: definition,
               position: mapTitlePositon,
             ),
-            MapLayerSlider(
+            MapStackSlider(
               position: mapSliderPosition,
-              stack: definition.image,
+              image: definition.image,
             ),
             MapNavigatorCard(
               controller: navigatorController,

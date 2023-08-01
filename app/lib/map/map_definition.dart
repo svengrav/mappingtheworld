@@ -20,14 +20,14 @@ class MapDefinition implements Disposable {
     required this.title,
     required this.year,
     required this.summary,
+    required defaultLayerKey,
     this.background,
     List<MapPointDefinition> points = const [],
     List<MapLayerDefinition> layers = const [],
-    int defaultLayer = 0,
   }) : image = MapImageDefinition(
-          defaultLayerKey: defaultLayer,
-          mapLayers: layers,
-          mapPoints: points,
+          defaultLayerKey: defaultLayerKey,
+          mapLayers: layers.reversed.toList(),
+          mapPoints: points.reversed.toList(),
           navigator: MapNavigator(mapWidth: width, mapHeight: height),
         );
         
