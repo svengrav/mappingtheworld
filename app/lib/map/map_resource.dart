@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// Abstract resource from various sources like images, SVG or Rive.
 class MapResource extends StatelessWidget {
-  static MapResource empty = const MapResource(source: SizedBox());
+  static const MapResource empty = MapResource(source: SizedBox());
 
   const MapResource({super.key, required this.source, this.background});
   final Widget source;

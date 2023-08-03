@@ -1,11 +1,13 @@
 // ignore: unused_import
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:mtw_app/map/map_point_definition.dart';
+import 'package:mtw_app/map/model/map_point_definition.dart';
 import 'package:mtw_app/utils/extensions.dart';
 
-class MapPoint extends StatefulWidget {
-  const MapPoint({
+import 'map_image_point_content.dart';
+
+class MapImagePoint extends StatefulWidget {
+  const MapImagePoint({
     required this.pointDefinition,
     super.key,
   });
@@ -13,10 +15,10 @@ class MapPoint extends StatefulWidget {
   final MapPointDefinition pointDefinition;
 
   @override
-  State<MapPoint> createState() => _MapPointState();
+  State<MapImagePoint> createState() => _MapImagePointState();
 }
 
-class _MapPointState extends State<MapPoint>
+class _MapImagePointState extends State<MapImagePoint>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -47,48 +49,11 @@ class _MapPointState extends State<MapPoint>
         child: MapPointTarget(
           onTap: () => showDialog<String>(
             context: context,
-            builder: (BuildContext context) => MapPointContent(
+            builder: (BuildContext context) => MapImagePointContent(
                 pointDefinition: _pointDefinition, 
                 dialogSize: dialogSize),
           ),
         ));
-  }
-}
-
-class MapPointContent extends StatelessWidget {
-  const MapPointContent({
-    super.key,
-    required MapPointDefinition pointDefinition,
-    required this.dialogSize,
-  }) : _pointDefinition = pointDefinition;
-
-  final MapPointDefinition _pointDefinition;
-  final EdgeInsets dialogSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-        shape: const RoundedRectangleBorder(),
-        titlePadding: const EdgeInsets.all(8),
-        contentPadding: const EdgeInsets.only(left: 8, right: 8),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(_pointDefinition.label,
-                style: Theme.of(context).textTheme.titleMedium),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => Navigator.pop(context),
-              visualDensity: VisualDensity.comfortable,
-            )
-          ],
-        ),
-        insetPadding: dialogSize,
-        children: [
-          Text(
-            _pointDefinition.description ?? "",
-          )
-        ]);
   }
 }
 

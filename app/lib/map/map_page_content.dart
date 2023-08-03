@@ -1,19 +1,19 @@
 
 import 'package:flutter/material.dart';
-import 'package:mtw_app/map/map_definition.dart';
+import 'package:mtw_app/map/model/map_definition.dart';
+import 'package:mtw_app/map/map_stack_slider.dart';
+
+import '../utils/disposable.dart';
 
 class MapContent extends StatelessWidget {
   final MapDefinition map;
-  const MapContent({super.key, required this.map});
+  final Widget child;
+  const MapContent({super.key, required this.map, required this.child,});
 
   @override
   Widget build(BuildContext context) {
-    return MapProvider<MapDefinition>(create:  map, child: SizedBox());
+    return MapProvider<MapDefinition>(create:  map, child: child);
   }
-}
-
-abstract class Disposable {
-  void dispose();
 }
 
 class MapProvider<T extends Disposable> extends StatefulWidget {
@@ -26,7 +26,6 @@ class MapProvider<T extends Disposable> extends StatefulWidget {
     required this.child,
   })  : value = create, super(key: key);
 
-  // 2
   static T of<T extends Disposable>(BuildContext context) {
     final MapProvider<T> provider = context.findAncestorWidgetOfExactType()!;
     return provider.value;

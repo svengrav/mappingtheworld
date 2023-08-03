@@ -1,66 +1,82 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:collection/collection.dart';
-import 'package:mtw_app/map/map_point_definition.dart';
+import 'package:mtw_app/map/model/map_definition.dart';
+import 'package:mtw_app/map/map_page_content.dart';
+import 'package:mtw_app/map/model/map_point_definition.dart';
+import 'package:mtw_app/utils/notifier.dart';
 import 'map_position.dart';
+import 'model/map_image_definition.dart';
+import 'model/map_stack_definition.dart';
 
-typedef OnLayerChanged = void Function(int layer);
+typedef MapImageListenerBuilder = Widget Function(BuildContext context);
 
-class MapStackSlider extends StatefulWidget {
-  const MapStackSlider({
-    super.key,
-    required this.image,
-    this.onLayerChanged,
-    required this.position,
-  });
-
-  final OnLayerChanged? onLayerChanged;
-  final MapImageDefinition image;
-  final MapPosition position;
+class MapImageListener extends StatefulWidget {
+  final BuildContext context;
+  final MapImageListenerBuilder builder;
+  const MapImageListener({super.key, required this.context, required this.builder});
 
   @override
-  State<MapStackSlider> createState() => _MapStackSliderState();
+  State<MapImageListener> createState() => _MapImageListenerState();
 }
 
-class _MapStackSliderState extends State<MapStackSlider> {
-  late double _currentValue = 1.0;
-  late List<MapStackLayerDefinition> _stacks;
+class _MapImageListenerState extends State<MapImageListener> {
+  late MapDefinition _mapDefinition;
+  late int random = Random().nextInt(100);
+  late NotifierListener listener;
 
   @override
   void initState() {
+    listener = NotifierListener((sender, args) => { setState(() {
+      random = Random().nextInt(100);
+    },)});
+
+    _mapDefinition = MapProvider.of<MapDefinition>(context);
+    _mapDefinition.image.controller.addListener(listener);
     super.initState();
-    _stacks = widget.image.stacks;
-    _currentValue = widget.image.currentStackIndex.toDouble();
+  }
+
+  @override
+  void dispose() {
+    _mapDefinition.image.controller.removeListener(listener);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    _stacks = widget.image.stacks;
+    return Container(key: ValueKey(random), child: widget.builder.call(context));
+  }
+}
 
-    return widget.position.build(
-      Transform.scale(
-        scale: 0.8,
-        child: Slider(
-          value: _currentValue,
-          min: 0,
-          max: _stacks.length - 1,
-          divisions: _stacks.length - 1,
-          onChanged: (double value) {
-            setState(() {
-              _stacks.forEachIndexed((i, stack) {
-                if (i <= value) {
-                  stack.controller.show();
-                } else {
-                  stack.controller.hide();
-                }
-              });
-              _currentValue = value;
-              widget.image.controller.notify(this);
-            });
-            widget.onLayerChanged?.call(value.toInt());
-          },
+
+class MapStackSlider2 extends StatelessWidget {
+  final MapPosition position;
+
+  const MapStackSlider2({super.key, required this.position});
+
+  @override
+  Widget build(BuildContext context) {
+    return MapImageListener(context: context, builder: (context) { 
+        MapDefinition mapDefinition = MapProvider.of(context);
+        double maxStacks = mapDefinition.image.stacks.length - 1;
+        double stackIndex = mapDefinition.image.currentStackIndex.toDouble();
+
+      return position.build(
+        Transform.scale(
+          scale: 0.8,
+          child: Slider(
+            value: stackIndex,
+            min: 0,
+            max: maxStacks,
+            divisions: maxStacks.toInt(),
+            onChanged: (double value) {
+              mapDefinition.image.setStackIndex(value.toInt());
+            },
+          ),
         ),
-      ),
+      );}
     );
   }
 }

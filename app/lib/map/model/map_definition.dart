@@ -1,7 +1,11 @@
 import 'package:mtw_app/map/map_background.dart';
-import 'package:mtw_app/map/map_navigator.dart';
-import 'package:mtw_app/map/map_page_content.dart';
-import 'package:mtw_app/map/map_point_definition.dart';
+import 'package:mtw_app/map/model/map_navigator.dart';
+import 'package:mtw_app/map/model/map_point_definition.dart';
+
+import '../../utils/disposable.dart';
+import 'map_image_definition.dart';
+import 'map_key.dart';
+import 'map_layer_definition.dart';
 
 class MapDefinition implements Disposable {
   final double width;
@@ -20,7 +24,7 @@ class MapDefinition implements Disposable {
     required this.title,
     required this.year,
     required this.summary,
-    required defaultLayerKey,
+    required MapKey defaultLayerKey,
     this.background,
     List<MapPointDefinition> points = const [],
     List<MapLayerDefinition> layers = const [],
@@ -31,8 +35,12 @@ class MapDefinition implements Disposable {
           navigator: MapNavigator(mapWidth: width, mapHeight: height),
         );
         
-          @override
-          void dispose() {
-            // TODO: implement dispose
-          }
+  @override
+  void dispose() {
+  }
+
+  @override
+  String toString() {
+    return 'width: $width - height: $height - title: $title - year: $year';
+  }
 }

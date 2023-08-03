@@ -1,6 +1,6 @@
 // Import the test package and Counter class
 
-import 'package:mtw_app/map/map_navigator.dart';
+import 'package:mtw_app/map/model/map_navigator.dart';
 import 'package:mtw_app/utils/notifier.dart';
 import 'package:test/test.dart';
 

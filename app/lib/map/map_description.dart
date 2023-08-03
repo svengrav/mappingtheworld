@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mtw_app/map/map_definition.dart';
+import 'package:mtw_app/map/model/map_definition.dart';
 
 import 'map_position.dart';
 
@@ -19,9 +19,9 @@ class MapDescription extends StatelessWidget {
     var description = Column(children: [
       Container(
         color: Colors.white38,
+        width: 50,
         height: 1,
         margin: const EdgeInsets.all(15),
-        width: 50,
       ),
       Text(
         definition.summary,

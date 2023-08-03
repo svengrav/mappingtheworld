@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mtw_app/map/map_definition.dart';
+import 'package:mtw_app/map/model/map_definition.dart';
 import 'package:mtw_app/map/map_position.dart';
 import 'package:mtw_app/map/map_settings.dart';
 import 'package:mtw_app/utils/extensions.dart';
@@ -7,6 +7,7 @@ import 'package:mtw_app/utils/extensions.dart';
 import '../app/app_scaffold.dart';
 import 'map_description.dart';
 import 'map_image.dart';
+import 'map_page_content.dart';
 import 'map_stack_slider.dart';
 import 'map_navigator_card.dart';
 import 'map_navigator_settings.dart';
@@ -26,7 +27,6 @@ class MapPage extends StatelessWidget {
     var pageHeight = context.getScreenHeight() - (padding * 2);
     var pageWidth = context.getScreenWidth() - (padding * 2);
 
-    var controller = TransformationController();
     var navigator = definition.navigator.set(pageWidth: pageWidth, pageHeight: pageHeight);
 
     var navigatorController = MapNavigatorCardController(navigator: navigator);
@@ -84,25 +84,21 @@ class MapPage extends StatelessWidget {
     AppScaffold.of(context).setActions(
         [MapSettingsSwitch(controller: mapSettingsPosition.controller)]);
 
-    return _MapPageContent(
+    return MapContent(map: definition, child: _MapPageContent(
       children: [
         definition.background ?? const SizedBox(),
         Padding(
           padding: const EdgeInsets.all(padding),
           child: Stack(children: [
             MapImage(
-              controller: controller,
-              navigator: navigator,
-              stack: definition.image,
               position: navigator.position,
             ),
             MapDescription(
               definition: definition,
               position: mapTitlePositon,
             ),
-            MapStackSlider(
+            MapStackSlider2(
               position: mapSliderPosition,
-              image: definition.image,
             ),
             MapNavigatorCard(
               controller: navigatorController,
@@ -120,7 +116,7 @@ class MapPage extends StatelessWidget {
           ]),
         )
       ],
-    );
+    ));
   }
 
   static MapPage? maybeOf(BuildContext context) {
