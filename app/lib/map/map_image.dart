@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/stream/event_builder.dart';
 import 'package:mtw_app/utils/extensions.dart';
 
 import 'model/map_definition.dart';
@@ -27,14 +28,11 @@ class MapImage extends StatelessWidget {
           cursorHorizontal: details.focalPoint.dx,
           cursorVertical: details.focalPoint.dy);
     }
-
-    return MapImageListener(
-        context: context,
-        builder: (context) {
-
+    
+    return EventBuilder(event: mapDefinition.image.mapStackChanged, builder: (context, value, history) {
           var children = <Widget>[];
-          for (var layer in mapDefinition.image.stacks) {
-            children.add(MapImageStack(layer: layer));
+          for (var layer in mapDefinition.image.stacks.values) {
+            children.add(MapImagestack(stack: layer));
           }
 
           return position.build(InteractiveViewer(
@@ -50,6 +48,7 @@ class MapImage extends StatelessWidget {
               children: children,
             ),
           ));
-        });
+
+    });
   }
 }

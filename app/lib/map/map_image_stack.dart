@@ -1,64 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/stream/event_builder.dart';
 import 'package:mtw_app/utils/notifier.dart';
 import 'map_image_point.dart';
+import 'map_page_content.dart';
+import 'model/map_definition.dart';
 import 'model/map_stack_definition.dart';
 
-class MapImageStack extends StatefulWidget {
-  const MapImageStack({super.key, required this.layer});
-
-  final MapStackDefinition layer;
-
-  @override
-  State<MapImageStack> createState() => _MapImageStackState();
-}
-
-class _MapImageStackState extends State<MapImageStack> {
-
-  double _opacityLevel = 1.0;
-  bool _visiblity = true;
-
-  late final ValueListener _stackListener = ValueListener((sender, args) {
-    if (widget.layer.visible) {
-      setState(() {
-        _opacityLevel = 1;
-      });
-    } else {
-      setState(() {
-        _opacityLevel = 0;
-      });
-    }
-  });
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+class MapImagestack extends StatelessWidget {
+  const MapImagestack({super.key, required this.stack});
+  final MapStackDefinition stack;
 
   @override
   Widget build(BuildContext context) {
-    var children = <Widget>[widget.layer.layer.resource];
-    for (var point in widget.layer.points) {
-      children.add(MapImagePoint(pointDefinition: point));
-    }
+    final MapDefinition mapDefinition = MapProvider.of(context);
 
-    return AnimatedOpacity(
-      onEnd: () {
-        setState(() {
-          _visiblity = widget.layer.visible;
-        });
-      },
-      duration: const Duration(milliseconds: 500),
-      opacity: _opacityLevel,
-      child: _visiblity
-          ? Stack(
-              children: children,
-            )
-          : const SizedBox(),
-    );
+    return EventBuilder(event: mapDefinition.image.mapStackChanged, builder: (context, value, history) {
+        var children = <Widget>[stack.layer.resource];
+
+        var oldVisibileState = history.lastOrNull?.value?[stack.index]?.visible ?? false;
+        var newVisibileState = stack.visible;
+
+        Tween<double> fadeTween = Tween<double>(begin: 0, end: 0);
+        if(oldVisibileState == true && newVisibileState == false) {
+          fadeTween = Tween<double>(begin: 1, end: 0);
+        } 
+        if(oldVisibileState == false && newVisibileState == true) {
+          fadeTween = Tween<double>(begin: 0, end: 1);
+        }
+        if(oldVisibileState == true && newVisibileState == true) {
+          fadeTween = Tween<double>(begin: 1, end: 1);
+        }
+        if(oldVisibileState == false && newVisibileState == false) {
+          fadeTween = Tween<double>(begin: 0, end: 0);
+        }
+
+        for (var point in stack.points) {
+          children.add(MapImagePoint(pointDefinition: point));
+        }
+
+        return TweenAnimationBuilder(
+          tween: fadeTween, 
+          duration: const Duration(seconds: 1), 
+          builder: (BuildContext context, double opacity, Widget? child) {
+            if(opacity == 0) {
+              return const SizedBox();
+            }
+            return Opacity(opacity: opacity, child: Stack(children: children,));
+      });
+    });
   }
 }

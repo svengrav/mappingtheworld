@@ -97,7 +97,7 @@ class MapPage extends StatelessWidget {
               definition: definition,
               position: mapTitlePositon,
             ),
-            MapStackSlider2(
+            MapStackSlider(
               position: mapSliderPosition,
             ),
             MapNavigatorCard(
