@@ -1,6 +1,6 @@
 // Import the test package and Counter class
 import 'package:flutter/material.dart';
-import 'package:mtw_app/map/map_position.dart';
+import 'package:mtw_app/map/model/map_position.dart';
 import 'package:test/test.dart';
 // ignore: avoid_relative_lib_imports
 

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mtw_app/map/map_background.dart';
 import 'package:mtw_app/map/model/map_navigator.dart';
 import 'package:mtw_app/map/model/map_point_definition.dart';
@@ -7,6 +8,7 @@ import 'map_image_definition.dart';
 import 'map_key.dart';
 import 'map_layer_definition.dart';
 
+@immutable
 class MapDefinition implements Disposable {
   final double width;
   final double height;

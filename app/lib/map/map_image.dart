@@ -5,8 +5,7 @@ import 'package:mtw_app/utils/extensions.dart';
 import 'model/map_definition.dart';
 import 'map_image_stack.dart';
 import 'map_page_content.dart';
-import 'map_position.dart';
-import 'map_stack_slider.dart';
+import 'model/map_position.dart';
 
 class MapImage extends StatelessWidget {
   const MapImage({
@@ -20,6 +19,7 @@ class MapImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final MapDefinition mapDefinition = MapProvider.of(context);
     final TransformationController controller = TransformationController();
+    
     void handleInteractionUpdate(details) {
       mapDefinition.image.navigator.set(
           mapScale: controller.getScale(),

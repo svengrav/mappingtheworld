@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/notifier.dart';
+import '../../utils/notifier.dart';
 
 class MapVisibilityController with Notifier  {
   MapVisibilityController({visible = true}) : _isVisible = visible;

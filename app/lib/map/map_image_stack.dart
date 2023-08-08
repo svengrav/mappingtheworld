@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/stream/event_builder.dart';
-import 'package:mtw_app/utils/notifier.dart';
 import 'map_image_point.dart';
 import 'map_page_content.dart';
 import 'model/map_definition.dart';

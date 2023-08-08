@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mtw_app/map/model/map_definition.dart';
 
-import 'map_position.dart';
+import 'model/map_position.dart';
 
 class MapDescription extends StatelessWidget {
   final MapDefinition definition;
@@ -37,7 +37,6 @@ class MapDescription extends StatelessWidget {
       ),
       position.height > 100 ? description : const SizedBox()
     ]);
-
 
     return position.build(Padding(
       padding: const EdgeInsets.all(15.0),

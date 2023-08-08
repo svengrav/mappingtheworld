@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/model/map_definition.dart';
 import 'package:mtw_app/map/map_page_content.dart';
-import 'map_position.dart';
+import 'model/map_position.dart';
 import 'stream/event_builder.dart';
 
 class MapStackSlider extends StatelessWidget {

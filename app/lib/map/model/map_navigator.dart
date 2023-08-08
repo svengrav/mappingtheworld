@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtw_app/utils/extensions.dart';
 import 'package:mtw_app/utils/notifier.dart';
-import '../map_position.dart';
+import 'map_position.dart';
 
 class MapNavigator with Notifier {
   final double mapHeight;

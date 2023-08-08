@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/model/map_definition.dart';
-import 'package:mtw_app/map/map_position.dart';
+import 'package:mtw_app/map/model/map_position.dart';
 import 'package:mtw_app/map/map_settings.dart';
 import 'package:mtw_app/utils/extensions.dart';
 

@@ -3,7 +3,7 @@ import 'package:mtw_app/map/map_card.dart';
 
 import '../app/app_theme.dart';
 import '../utils/notifier.dart';
-import 'map_position.dart';
+import 'model/map_position.dart';
 
 class MapSettingsSwitch extends StatefulWidget {
   const MapSettingsSwitch({super.key, required this.controller});

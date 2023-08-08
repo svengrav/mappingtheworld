@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/notifier.dart';
 import 'map_card.dart';
-import 'model/map_navigator.dart';
-import 'map_position.dart';
+import 'model/model.dart';
 
 class MapNavigatorCard extends StatefulWidget {
 
