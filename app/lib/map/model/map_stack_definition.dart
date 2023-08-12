@@ -14,6 +14,7 @@ class MapStackDefinition extends Equatable {
   final List<MapPointDefinition> points;
 
   MapKey get key => layer.key;
+  String get label => layer.label;
 
   const MapStackDefinition({
     required this.index,

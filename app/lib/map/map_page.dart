@@ -13,7 +13,6 @@ import 'map_navigator_card.dart';
 import 'map_navigator_settings.dart';
 
 class MapPage extends StatelessWidget {
-
   static const double padding = 10;
   final MapDefinition definition;
 
@@ -27,7 +26,8 @@ class MapPage extends StatelessWidget {
     var pageHeight = context.getScreenHeight() - (padding * 2);
     var pageWidth = context.getScreenWidth() - (padding * 2);
 
-    var navigator = definition.navigator.set(pageWidth: pageWidth, pageHeight: pageHeight);
+    var navigator =
+        definition.navigator.set(pageWidth: pageWidth, pageHeight: pageHeight);
 
     var navigatorController = MapNavigatorCardController(navigator: navigator);
 
@@ -40,12 +40,12 @@ class MapPage extends StatelessWidget {
     );
 
     var mapNavigatorPosition = MapPosition(
-        pageWidth: pageWidth,
-        pageHeight: pageHeight,
-        height: 400,
-        width: 400,
-        alignment: Alignment.topRight,
-        controller: navigatorController,
+      pageWidth: pageWidth,
+      pageHeight: pageHeight,
+      height: 400,
+      width: 400,
+      alignment: Alignment.topRight,
+      controller: navigatorController,
     );
 
     var mapTitlePositon = MapPosition(
@@ -84,63 +84,33 @@ class MapPage extends StatelessWidget {
     AppScaffold.of(context).setActions(
         [MapSettingsSwitch(controller: mapSettingsPosition.controller)]);
 
-    return MapContent(map: definition, child: _MapPageContent(
+    return MapPageContent(
+      map: definition,
       children: [
-        definition.background ?? const SizedBox(),
-        Padding(
-          padding: const EdgeInsets.all(padding),
-          child: Stack(children: [
-            MapImage(
-              position: navigator.position,
-            ),
-            MapDescription(
-              definition: definition,
-              position: mapTitlePositon,
-            ),
-            MapStackSlider(
-              position: mapSliderPosition,
-            ),
-            MapNavigatorCard(
+        MapImage(
+          position: navigator.position,
+        ),
+        MapDescription(
+          definition: definition,
+          position: mapTitlePositon,
+        ),
+        MapStackSlider(
+          position: mapSliderPosition,
+        ),
+        MapNavigatorCard(
+          navigator: navigator,
+          controller: navigatorController,
+          position: mapNavigatorPosition,
+        ),
+        MapSettings(
+          position: mapSettingsPosition,
+          settings: [
+            MapNavigatorSettings(
               controller: navigatorController,
-              position: mapNavigatorPosition,
-              navigator: navigator,
-            ),
-            MapSettings(
-              position: mapSettingsPosition,
-              settings: [
-                MapNavigatorSettings(
-                  controller: navigatorController,
-                )
-              ],
             )
-          ]),
+          ],
         )
       ],
-    ));
-  }
-
-  static MapPage? maybeOf(BuildContext context) {
-    return context.findAncestorWidgetOfExactType<MapPage>();
-  }
-
-  static MapPage of(BuildContext context) {
-    final MapPage? result = maybeOf(context);
-    assert(result != null, 'MapPage not found.');
-    return result!;
-  }
-}
-
-class _MapPageContent extends StatelessWidget {
-  const _MapPageContent({required this.children});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: Stack(
-        children: children,
-      ),
     );
   }
 }

@@ -2,7 +2,7 @@
 import 'package:mtw_app/map/stream/event.dart';
 import 'package:mtw_app/utils/extensions.dart';
 
-import 'model.dart';
+import 'export.dart';
 
 class MapImageDefinition {  
   static const String layerKeyNotUnique = "Layers with the same key are invalid";
@@ -15,6 +15,7 @@ class MapImageDefinition {
   final MapKey defaultLayerKey;
 
   final Event<Map<int, MapStackDefinition>> mapStackChanged = Event();
+  final Event<double> mapScaleChanged = Event();
 
   Map<int, MapStackDefinition> _stacks = {};
   int _currentStackIndex = -1;
@@ -22,6 +23,11 @@ class MapImageDefinition {
 
   MapStackDefinition get defaultStack => _getDefaultLayer(defaultLayerKey);
   Map<int, MapStackDefinition> get stacks => _stacks;
+  double get scale => navigator.mapScale;
+  set scale(double scale) => { 
+    navigator.set(mapScale: scale),
+    mapScaleChanged.broadcast(scale)
+  };
 
   MapImageDefinition({
     required this.navigator,
@@ -39,6 +45,20 @@ class MapImageDefinition {
 
   MapStackDefinition _getDefaultLayer(MapKey key) {
     return _stacks.entries.toList().firstWhere((stack) => stack.key == key).value;
+  }
+
+  MapStackDefinition getStack(int index) => stacks[index]!;
+
+  void setNextStack() {
+    if(currentStackIndex < stacks.length - 1) {
+      setStackIndex(currentStackIndex + 1);
+    }
+  }
+
+  void setPreviousStack() {
+    if(currentStackIndex > 0) {
+      setStackIndex(currentStackIndex - 1);
+    }
   }
 
   void setStackIndex(int index) {

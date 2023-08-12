@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/stream/event_builder.dart';
 import 'map_image_point.dart';
-import 'map_page_content.dart';
+import 'map_provider.dart';
 import 'model/map_definition.dart';
 import 'model/map_stack_definition.dart';
 
@@ -36,7 +36,7 @@ class MapImagestack extends StatelessWidget {
         for (var point in stack.points) {
           children.add(MapImagePoint(pointDefinition: point));
         }
-
+        
         return TweenAnimationBuilder(
           tween: fadeTween, 
           duration: const Duration(seconds: 1), 
@@ -45,7 +45,7 @@ class MapImagestack extends StatelessWidget {
               return const SizedBox();
             }
             return Opacity(opacity: opacity, child: Stack(children: children,));
-      });
+            });
     });
   }
 }

@@ -1,50 +1,30 @@
 
 import 'package:flutter/material.dart';
 import 'package:mtw_app/map/model/map_definition.dart';
-import 'package:mtw_app/map/map_stack_slider.dart';
 
-import '../utils/disposable.dart';
+import 'map_provider.dart';
 
-class MapContent extends StatelessWidget {
+class MapPageContent extends StatelessWidget {
+  static const double padding = 10;
+
   final MapDefinition map;
-  final Widget child;
-  const MapContent({super.key, required this.map, required this.child,});
+  final List<Widget> children;
+  const MapPageContent({super.key, required this.map, required this.children,});
 
   @override
   Widget build(BuildContext context) {
-    return MapProvider<MapDefinition>(create:  map, child: child);
+    return MapProvider<MapDefinition>(create: map, child: 
+    
+    Stack(
+      children: [
+        map.background ?? const SizedBox(),
+        Padding(
+          padding: const EdgeInsets.all(padding),
+          child: Stack(children: children),
+        )
+      ],
+    )
+  
+    );
   }
 }
-
-class MapProvider<T extends Disposable> extends StatefulWidget {
-  final Widget child;
-  final T value;
-
-  const MapProvider({
-    Key? key,
-    required T create,
-    required this.child,
-  })  : value = create, super(key: key);
-
-  static T of<T extends Disposable>(BuildContext context) {
-    final MapProvider<T> provider = context.findAncestorWidgetOfExactType()!;
-    return provider.value;
-  }
-
-  @override
-  State createState() => _MapProviderState();
-}
-
-class _MapProviderState extends State<MapProvider> {
-  // 3
-  @override
-  Widget build(BuildContext context) => widget.child;
-
-  // 4
-  @override
-  void dispose() {
-    widget.value.dispose();
-    super.dispose();
-  }
-}
-

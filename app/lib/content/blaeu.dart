@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mtw_app/map/model/export.dart';
 import 'package:mtw_app/map/model/map_key.dart';
 import 'package:mtw_app/map/model/map_layer_definition.dart';
 
@@ -20,17 +21,32 @@ class MapBlaeu extends StatelessWidget {
           height: 2400,
           defaultLayerKey: const MapKey(0),
           background: const MapBackground(),
-          points: const [],
+          points: const [
+             MapPointDefinition(
+              key: MapKey('p1'),
+              position: Offset(0.5, 0.5),
+              label: 'Point 1',
+              description: 'Mein Point 1',
+              layerKeys: [MapKey(0)]
+            )
+          ],
           layers: [
             MapLayerDefinition(
               key: const MapKey(0),
+              label: 'Blaeu',
+              resource: MapImageRessource.storage(
+                  path:
+                      'https://stmtwcore.blob.core.windows.net/app-images/map-bleau.jpg?sp=r&st=2023-08-09T14:19:40Z&se=2023-08-09T22:19:40Z&spr=https&sv=2022-11-02&sr=b&sig=Abq7irHtkevqdV4gyiEYFTEeBpeYodzB1eFzH9DD%2FBI%3D'),
+            ),
+            MapLayerDefinition(
+              key: const MapKey(1),
               label: '',
               resource: MapColorResource(
                 color: Colors.black12,
               ),
             ),
             MapLayerDefinition(
-              key: const MapKey(1),
+              key: const MapKey(2),
               label: '',
               resource: MapColorResource(
                 color: const Color.fromARGB(31, 74, 87, 165),

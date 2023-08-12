@@ -20,7 +20,6 @@ class MapVisibilityController with Notifier  {
   }
 }
 
-
 class MapPositionController extends MapVisibilityController {
   MapPositionController({visible = true}) : super(visible: visible);
 }
@@ -59,7 +58,6 @@ class MapPosition {
     Alignment? alignment,
     Alignment? alignChild,
     bool visible = true
-
   })  : _pageWidth = pageWidth,
         _pageHeight = pageHeight,
         _controller = controller ?? MapPositionController(visible: visible) 

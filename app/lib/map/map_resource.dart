@@ -14,7 +14,6 @@ class MapResource extends StatelessWidget {
   }
 }
 
-/// Image resource.
 class MapImageRessource extends MapResource {
   MapImageRessource.storage({super.key, required String path, super.background})
       : super(source: Image.network(path));
